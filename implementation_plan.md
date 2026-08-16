@@ -52,8 +52,8 @@ Dışarıdan bir ajans (20-30 kişilik bir ekip gücü) gibi çalışacak bu sis
 - **Ajan/Log İzolasyonu:** Her ajanın kendi stdout/stderr akışının ayrı bir terminal sekmesine (veya grid'ine) pipe edilebilmesi.
 
 ### D. Proje Şablonları ve Kural Motoru (Blueprint Engine)
-- **Hazır Bağlamlar (Context Presets):** Yeni bir iş geldiğinde "Bu bir Mobil projesidir ve tasarım dili Y projesi gibidir" diyebileceğiniz hazır şablon yapısı. Ajanlar işe başlarken otomatik olarak bu şablonun kurallarını yükler. Sizi sürekli aynı şeyleri yazmaktan (tekrarlayan promptlardan) kurtarır.
-- **Tasarım Dayatması (Design Consistency):** Eklenen referans görseller ve tasarım kuralları sayesinde, ajanların ürettiği işlerin sizin profesyonel standartlarınızda ve %100 tutarlı çıkmasını garanti eden yerleşik kural sistemi.
+- **Metodolojik Şablonlar (Methodology Presets):** Yeni bir iş geldiğinde "Bu bir Mobil projesidir ve kod/mimari süreci X projesi gibidir" diyebileceğiniz hazır şablon yapısı. Bu, renkleri veya UI'yi 1-1 kopyalamak (klonlamak) anlamına **gelmez**. Ajanlar, o projedeki temiz kod mimarisini (Clean Architecture), bileşen (component) yapısını ve klasörleme mantığını (süreci) referans alır.
+- **Tasarım Süreci Dayatması (Design Process Consistency):** Ajanlar görselleri veya renk paletlerini birebir kopyalamak yerine, sizin belirlediğiniz profesyonel tasarım *standartlarını* (örneğin "Atomic Design prensiplerini kullan", "Boşluk (whitespace) hiyerarşisine dikkat et", "Accessibility kurallarına uy") yeni projenin özgün dinamiklerine uyarlar. Bu sayede her proje görsel olarak benzersiz (unique) olur ama kalite/süreç olarak %100 sizin standart imzanızı (tutarlılığı) taşır.
 - **Pazarlama (Marketing) Entegrasyonu İçin Altyapı:** İleride kod bitince devreye girecek "Pazarlama Ajanları" için projenin tamamlanmış bağlamını (ürün özellikleri, marka dili) okuyabilecekleri genişletilebilir veri modeli.
 
 ## 4. UI (Kullanıcı Arayüzü) Yerleşim Planı (Wireframe)
