@@ -35,5 +35,52 @@ AgentSpace'teki ajanlarınıza doğrudan organizasyonunuzla etkileşim kurma yet
 - **Ajan 2 (Developer):** Siz terminalden "Şu projedeki bug'ı çöz" dediğinizde, ajan Issue'yu okur, kodu kendi terminalinde analiz eder ve çözümü içeren yeni bir PR'ı doğrudan `brsagentspace` repolarına açar.
 - Ajanların tüm bu faaliyetleri, uygulamanın ofis (Phaser.js) ekranında animasyonlarla (masa başında çalışma, düşünme vs.) görselleştirilir.
 
-## Doğrulama ve Sonraki Adım
-Eğer bu mimari ve entegrasyon mantığı aklınıza yattıysa, lütfen yukarıdaki soruları yanıtlayın. Onayınızın ardından kod deposunun iskeletini (Tauri + React + Vite) yerel bilgisayarınızda kurarak işe resmi olarak başlayabiliriz.
+## 3. Temel Faz (Phase 1 / MVP) Özellikleri
+
+Dışarıdan bir ajans (20-30 kişilik bir ekip gücü) gibi çalışacak bu sistemin ilk sürümünde (MVP) sağlam bir temel atmak için şu özellikleri kurguladım:
+
+### A. Çoklu Ajan Orkestrasyonu (Multi-Agent Engine)
+- **Eşzamanlı Görev İşleme:** Ajanların (robotların) asenkron olarak farklı iş parçacıklarında (thread/worker) çalışabilmesi. Örneğin; "Ajan 1" frontend kodunu yazarken, "Ajan 2"in eşzamanlı olarak backend API testlerini yazması.
+- **Ortak Hafıza Havuzu:** Tüm ajanların Google Cloud Knowledge Catalog (Bilgi Grafiği) üzerinden birbirlerinin state'ini (ne aşamada olduklarını) anlık okuyabilmesi.
+
+### B. Phaser.js 2D Ofis (Canlı Simülasyon)
+- **Dinamik State Yansıması:** Ajanın arka plandaki durumu (Idle, Fetching, Processing, Writing) doğrudan 2D Canvas üzerindeki robot animasyonuna (Gezinme, Düşünme, Klavye Yazma) yansıyacak.
+- **A-Star Pathfinding:** Yeni görev alan robotun ofis içinde boş bir server/çalışma masası bulup engellere çarpmadan oraya yürümesi.
+
+### C. Gelişmiş Çoklu Terminal (xterm.js Multiplexer)
+- **Split-Pane (Bölünmüş) Mimari:** Tmux benzeri bir yapıyla, sağ panelde istenildiği kadar terminalin yatay/dikey bölünebilmesi.
+- **Ajan/Log İzolasyonu:** Her ajanın kendi stdout/stderr akışının ayrı bir terminal sekmesine (veya grid'ine) pipe edilebilmesi.
+
+## 4. UI (Kullanıcı Arayüzü) Yerleşim Planı (Wireframe)
+
+Uygulamanın (Tauri penceresi) ana ekran yerleşimi, karmaşıklığı önleyecek ancak profesyonel bir IDE hissiyatı verecek şekilde şöyle tasarlanmıştır:
+
+```text
++-----------------------------------------------------------------------+
+|  [Proje: brsagentspace] | [Knowledge Graph: Senkronize] | [Ayarlar]   |
++-----------------------------------+-----------------------------------+
+|                                   |                                   |
+|                                   |  [Terminal 1 - Ajan: Backend]     |
+|                                   |  > Rust servisi derleniyor...     |
+|                                   |                                   |
+|   2D Ofis Simülasyonu             +-----------------------------------+
+|   (Phaser.js WebGL Canvas)        |                                   |
+|                                   |  [Terminal 2 - Ajan: Frontend]    |
+|   - Çalışan Robot Animasyonları   |  > React bileşenleri yazılıyor... |
+|   - Dinamik Masa/Server Objeleri  |                                   |
+|   - Kenney.nl Emote Baloncukları  +-----------------------------------+
+|                                   |                                   |
+|                                   |  [Ana Terminal (User Prompt)]     |
+|                                   |  $ Tüm ajanlara: Testleri başlat_ |
++-----------------------------------+-----------------------------------+
+|  [Aktif Ajanlar: 2/5] | [CPU/RAM Tüketimi] | [GitHub API Limit: %98]  |
++-----------------------------------------------------------------------+
+```
+
+### Bölüm İşlevleri
+1. **Sol Panel (%60 - Oyun Motoru):** Görsel geri bildirim alanı. Ajanların hangi masada çalıştığı veya boşta beklediği canlı izlenir.
+2. **Sağ Panel (%40 - IDE Terminal):** Gerçek işin aktığı, kodların ve logların döküldüğü çoklu xterm.js alanı.
+3. **Alt Bar (Status Bar):** Sistem metrikleri (CPU/RAM) ve GitHub/Cloud API rate limitlerinin takibi.
+
+## Doğrulama ve Geri Bildirim
+Deneyimli bir Full-Stack Engineer olarak, 20-30 kişilik bir ekibin gücünü tek bir ekrandan yönetmek için bu yerleşim ve temel özellikler sizce uygun mu? Özellikle terminal yapısında veya 2D ofis etkileşiminde değiştirmek/eklemek istediğiniz bir temel fonksiyon var mı?
