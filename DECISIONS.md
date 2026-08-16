@@ -455,6 +455,26 @@ Context sıfırlansa bile ajan bu dosyayı okuyarak saniyeler içinde tam bağla
 
 ---
 
+## 13. Ürün Kalitesi ve Tasarım: Anti-Vibe-Code → SaaS Dönüşüm Standardı
+
+### ✅ KARAR: 5 Temel SaaS Mühendisliği ve Tasarım Dönüşüm Prensibi
+
+Yapay zeka tarafından hızlıca üretilen fakat amatör/oyuncak gibi hissettiren ("vibe code") kalıplardan kaçınmak ve üretilen projeleri gerçek, kurumsal bir SaaS ürününe dönüştürmek için 5 zorunlu standart belirlenmiştir.
+
+| Alan | Hata (Vibe Code) | Standart Çözüm (Real SaaS) |
+|---|---|---|
+| **1. Görsel Dil & İkonlar** | Rastgele emojiler, tutarsız ikonlar | **Phosphor / Lucide / Heroicons**, homojen çizgi kalınlığı (stroke-width), UI'da emoji yasağı |
+| **2. Renk Teorisi & KPI** | Göz yoran neon ve uyumsuz AI renkleri, çıplak KPI sayıları | **Mat HSL paletleri**, her KPI kartının altına **mikro trend grafiği (sparkline)** |
+| **3. Bilgi Mimarisi** | Her ekranda aynı metriklerin tekrarı | **Minimal Sidebar**, ikincil ayarlar açılır menüde, kurumsal minimal hesap kartı |
+| **4. Fonksiyonel UI** | Kullanıcıyı ilk anda boğan devasa formlar | **Progressive Disclosure**, Accordion/Collapse ile gizlenen gelişmiş ayarlar |
+| **5. UX, Billing & Landing** | Karmaşık fiyatlandırma, düz metin vitrin | **3-4 net plan**, popüler plan vurgusu, **3D açılı (skew/tilt) gölgeli gerçek UI vitrini** |
+
+**Uygulama Alanı:**
+- `_base.yaml` evrensel blueprint kurallarına işlenmiştir.
+- AgentSpace'in kendi masaüstü arayüzünde ve ürettiği tüm yazılım projelerinde zorunludur.
+
+---
+
 ## Eksiksiz Akademik Kaynakça
 
 | Makale | arXiv ID | Yıl | AgentSpace'teki Rolü |
