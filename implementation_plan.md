@@ -51,26 +51,28 @@ Dışarıdan bir ajans (20-30 kişilik bir ekip gücü) gibi çalışacak bu sis
 - **Split-Pane (Bölünmüş) Mimari:** Tmux benzeri bir yapıyla, sağ panelde istenildiği kadar terminalin yatay/dikey bölünebilmesi.
 - **Ajan/Log İzolasyonu:** Her ajanın kendi stdout/stderr akışının ayrı bir terminal sekmesine (veya grid'ine) pipe edilebilmesi.
 
+### D. Proje Şablonları ve Kural Motoru (Blueprint Engine)
+- **Hazır Bağlamlar (Context Presets):** Yeni bir iş geldiğinde "Bu bir Mobil projesidir ve tasarım dili Y projesi gibidir" diyebileceğiniz hazır şablon yapısı. Ajanlar işe başlarken otomatik olarak bu şablonun kurallarını yükler. Sizi sürekli aynı şeyleri yazmaktan (tekrarlayan promptlardan) kurtarır.
+- **Tasarım Dayatması (Design Consistency):** Eklenen referans görseller ve tasarım kuralları sayesinde, ajanların ürettiği işlerin sizin profesyonel standartlarınızda ve %100 tutarlı çıkmasını garanti eden yerleşik kural sistemi.
+- **Pazarlama (Marketing) Entegrasyonu İçin Altyapı:** İleride kod bitince devreye girecek "Pazarlama Ajanları" için projenin tamamlanmış bağlamını (ürün özellikleri, marka dili) okuyabilecekleri genişletilebilir veri modeli.
+
 ## 4. UI (Kullanıcı Arayüzü) Yerleşim Planı (Wireframe)
 
 Uygulamanın (Tauri penceresi) ana ekran yerleşimi, karmaşıklığı önleyecek ancak profesyonel bir IDE hissiyatı verecek şekilde şöyle tasarlanmıştır:
 
 ```text
 +-----------------------------------------------------------------------+
-|  [Proje: brsagentspace] | [Knowledge Graph: Senkronize] | [Ayarlar]   |
+|  [Proje: X Müşterisi] | [Şablon: Y Mobil Projesi] | [Ayarlar]         |
 +-----------------------------------+-----------------------------------+
+|                                   |  [Kurallar/Referanslar (Panel)]   |
+|                                   |  > UI Guideline: Minimalist       |
+|                                   +-----------------------------------+
+|   2D Ofis Simülasyonu             |  [Terminal 1 - Ajan: Backend]     |
+|   (Phaser.js WebGL Canvas)        |  > Rust servisi derleniyor...     |
 |                                   |                                   |
-|                                   |  [Terminal 1 - Ajan: Backend]     |
-|                                   |  > Rust servisi derleniyor...     |
-|                                   |                                   |
-|   2D Ofis Simülasyonu             +-----------------------------------+
-|   (Phaser.js WebGL Canvas)        |                                   |
-|                                   |  [Terminal 2 - Ajan: Frontend]    |
-|   - Çalışan Robot Animasyonları   |  > React bileşenleri yazılıyor... |
+|   - Çalışan Robot Animasyonları   +-----------------------------------+
 |   - Dinamik Masa/Server Objeleri  |                                   |
-|   - Kenney.nl Emote Baloncukları  +-----------------------------------+
-|                                   |                                   |
-|                                   |  [Ana Terminal (User Prompt)]     |
+|   - Kenney.nl Emote Baloncukları  |  [Ana Terminal (User Prompt)]     |
 |                                   |  $ Tüm ajanlara: Testleri başlat_ |
 +-----------------------------------+-----------------------------------+
 |  [Aktif Ajanlar: 2/5] | [CPU/RAM Tüketimi] | [GitHub API Limit: %98]  |
@@ -79,8 +81,9 @@ Uygulamanın (Tauri penceresi) ana ekran yerleşimi, karmaşıklığı önleyece
 
 ### Bölüm İşlevleri
 1. **Sol Panel (%60 - Oyun Motoru):** Görsel geri bildirim alanı. Ajanların hangi masada çalıştığı veya boşta beklediği canlı izlenir.
-2. **Sağ Panel (%40 - IDE Terminal):** Gerçek işin aktığı, kodların ve logların döküldüğü çoklu xterm.js alanı.
-3. **Alt Bar (Status Bar):** Sistem metrikleri (CPU/RAM) ve GitHub/Cloud API rate limitlerinin takibi.
+2. **Sağ Panel Üst (Kurallar/Bağlam):** Projeye özel önceden yüklediğiniz tasarım referanslarının, şablonların ve "Kesin Kurallar" listesinin durduğu (ve ajanların okuduğu) sabit referans paneli.
+3. **Sağ Panel Alt (IDE Terminal):** Gerçek işin aktığı, kodların ve logların döküldüğü çoklu xterm.js alanı.
+4. **Alt Bar (Status Bar):** Sistem metrikleri (CPU/RAM) ve GitHub/Cloud API rate limitlerinin takibi.
 
 ## Doğrulama ve Geri Bildirim
 Deneyimli bir Full-Stack Engineer olarak, 20-30 kişilik bir ekibin gücünü tek bir ekrandan yönetmek için bu yerleşim ve temel özellikler sizce uygun mu? Özellikle terminal yapısında veya 2D ofis etkileşiminde değiştirmek/eklemek istediğiniz bir temel fonksiyon var mı?
