@@ -19,10 +19,12 @@
 6. [RAG Mimarisi](#6-rag-mimarisi)
 7. [Token Verimliliği Stratejileri](#7-token-verimliliği-stratejileri)
 8. [Bellek Mimarisi](#8-bellek-mimarisi)
-9. [Görsel Materyaller (Assets)](#9-görsel-materyaller-assets)
-10. [Ajan Karakterleri](#10-ajan-karakterleri)
+9. [Görsel Materyaller (Assets)](#9-görsel-materyaller-assets) *(revize → 14)*
+10. [Ajan Karakterleri](#10-ajan-karakterleri) *(revize → 14)*
 11. [Gözlemlenebilirlik (Observability)](#11-gözlemlenebilirlik-observability)
 12. [Kaynak Kod Yönetimi](#12-kaynak-kod-yönetimi)
+13. [Ürün Kalitesi ve Tasarım](#13-ürün-kalitesi-ve-tasarım-anti-vibe-code--saas-dönüşüm-standardı)
+14. [Görsel Materyaller v2: LimeZu Pixel Art](#14-görsel-materyaller-v2-limezu-pixel-art) ⭐ güncel
 
 ---
 
@@ -359,7 +361,9 @@ Context sıfırlansa bile ajan bu dosyayı okuyarak saniyeler içinde tam bağla
 
 ## 9. Görsel Materyaller (Assets)
 
-### ✅ KARAR: Kenney.nl CC0 Asset Paketi
+> ⚠️ **REVİZE EDİLDİ (2026-08-18):** Bu karar [Bölüm 14](#14-görsel-materyaller-v2-limezu-pixel-art)'te LimeZu paketleriyle değiştirildi. Kenney paketleri içerik uyumsuzluğu nedeniyle (RPG Urban = dış mekan seti, Robot Pack = yandan görünüm) hiç sahneye entegre edilemedi.
+
+### ❌ ESKİ KARAR: Kenney.nl CC0 Asset Paketi
 
 **Lisans:** CC0 (Creative Commons Zero) — Tamamen ücretsiz, ticari kullanım dahil, attribution gerekmez.
 
@@ -387,7 +391,9 @@ Context sıfırlansa bile ajan bu dosyayı okuyarak saniyeler içinde tam bağla
 
 ## 10. Ajan Karakterleri
 
-### ✅ KARAR: Robot (İnsan Değil)
+> ⚠️ **REVİZE EDİLDİ (2026-08-18):** Robot kararı iptal edildi; [Bölüm 14](#14-görsel-materyaller-v2-limezu-pixel-art)'te LimeZu Modern Interiors insan karakterlerine geçildi (muratify referans görünümü insan karakterli, Robot Pack ise top-down ofise perspektif olarak uymuyordu).
+
+### ❌ ESKİ KARAR: Robot (İnsan Değil)
 
 **Karar:** Ajanlar piksel sanat robotları olarak görselleştirilir. İnsan karakterler kullanılmaz.
 
@@ -472,6 +478,40 @@ Yapay zeka tarafından hızlıca üretilen fakat amatör/oyuncak gibi hissettire
 **Uygulama Alanı:**
 - `_base.yaml` evrensel blueprint kurallarına işlenmiştir.
 - AgentSpace'in kendi masaüstü arayüzünde ve ürettiği tüm yazılım projelerinde zorunludur.
+
+---
+
+## 14. Görsel Materyaller v2: LimeZu Pixel Art
+
+### ✅ KARAR: LimeZu Modern Interiors + Modern Office (2026-08-18)
+
+**Satın alınan paketler** (toplam ~4$, itch.io):
+
+| Paket | Fiyat | İçerik | Kullanım |
+|---|---|---|---|
+| **Modern Interiors** | 1,50$ | 16/32/48px iç mekan, 100+ animasyonlu obje, premade karakterler (idle/walk/sit/phone 4 yön), Character Generator | Karakterler, dekor, emote balonları |
+| **Modern Office Revamped** | 2,50$ | 16px ofis tileset: Room Builder, mobilya sheet'i, 339 single | Duvar/zemin, masalar, otomatlar |
+
+**Neden Kenney değil:** RPG Urban Pack dış mekan sokak seti (ofis içi mobilya yok); Robot Pack yandan görünüm platformer. İkisi de sahneye entegre edilemedi — v1'de ekrandaki her şey Phaser Graphics dikdörtgenleriyle çizilmişti. Muratify referans görünümünün kaynağı LimeZu'dur.
+
+**⚠️ LİSANS KISITI (KRİTİK):**
+- LimeZu lisansı **yeniden dağıtımı yasaklar**; `brsagentspace` repoları **PUBLIC** olduğundan asset'ler git'e **girmez**.
+- `agentspace-assets/.gitignore` → `LimeZu_*/`; `agentspace-core/.gitignore` → `public/assets/limezu/`.
+- Yeni makinede build: paketleri itch.io hesabından indirip `agentspace-assets/LimeZu_*` altına aç, oradan `agentspace-core/public/assets/limezu/` seçkisini kopyala.
+- Atıf gerekli: limezu.itch.io
+
+**Uygulama (agentspace-core `OfficeScene.ts`, Phaser 4.2.1):**
+- Gerçek tilemap: Room Builder Office duvar yüzleri + 2×2 zemin blokları; 6 oda (5 çalışma + break room), kapı geçişleri
+- Oda başına 3×2 = 6 masa istasyonu (toplam 30); rol → tercih odası eşlemesi
+- Karakter durumları: working/thinking → masada oturma (sit/phone anim); idle/done → BFS pathfinding ile gezinme, break room ziyareti (kanepe oturma, kahve makinesi, otomatlar)
+- Durum emote balonları (LimeZu UI emotes): ⛏️ working, 💬 thinking, 💤 idle, ✨ done, ❌ blocked
+- Pixel-perfect: `pixelArt: true`, `roundPixels: true`, yarım-adım zoom + wheel zoom + drag pan
+- "Ajan Ekle" modalı: rol + 18 premade karakter seçici (`AddAgentModal.tsx`), `Agent.charKey` alanı
+
+**Phaser 4 saha notları:**
+1. Vite HMR eski Game instance'ını öldürmez → değişiklik testi için hard reload şart
+2. Chrome penceresi örtülüyse `visibilityState: hidden` → oyun döngüsü uyur (donma değil, normal davranış)
+3. `scene.sys.isActive()` create() sırasında güvenilmez → kendi `ready` bayrağı + bekleyen ajan kuyruğu kullanıldı
 
 ---
 
